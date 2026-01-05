@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useGame } from "./context/GameContext";
+import { useGame } from "./context/GameContext.jsx";
 
 import Entry from "./pages/Entry.jsx";
 import Lobby from "./pages/Lobby.jsx";
@@ -13,13 +13,13 @@ export default function App(){
   const { roomState, lastRoundResult, gameFinished } = useGame();
 
   useEffect(() => {
-    if(gameFinished) { nav("/result"); return; }
-    if(!roomState) { nav("/"); return; }
-    if(lastRoundResult) { nav("/result"); return; }
+    if (gameFinished) { nav("/result"); return; }
+    if (!roomState) { nav("/"); return; }
+    if (lastRoundResult) { nav("/result"); return; }
 
     const cr = roomState.currentRound;
-    if(!cr) { nav("/lobby"); return; }
-    if(cr.phase === "VOTING") nav("/vote");
+    if (!cr) { nav("/lobby"); return; }
+    if (cr.phase === "VOTING") nav("/vote");
     else nav("/play");
   }, [roomState, lastRoundResult, gameFinished, nav]);
 
