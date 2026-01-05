@@ -120,3 +120,39 @@ export function GameProvider({ children }){
       s.emit("submit_mutation", { roomCode, seedOwnerId, mutatedText }, (res) => resolve(res))
     );
   }
+
+  function submitEssay(seedOwnerId, essayText){
+    const s = socketRef.current;
+    return new Promise((resolve) =>
+      s.emit("submit_essay", { roomCode, seedOwnerId, essayText }, (res) => resolve(res))
+    );
+  }
+
+  function submitVotesAnonymous(votes){
+    const s = socketRef.current;
+    return new Promise((resolve) =>
+      s.emit("submit_votes_anonymous", { roomCode, votes }, (res) => resolve(res))
+    );
+  }
+
+  const value = {
+    serverUrl, setServerUrl,
+    connected,
+    nickname, setNickname,
+    roomCode, playerId, token,
+    roomState, me, isHost,
+    mutationJob, writingJob, anonBallot,
+    lastRoundResult, setLastRoundResult,
+    gameFinished,
+    connect,
+    createRoom,
+    joinRoom,
+    startRound,
+    submitSeed,
+    submitMutation,
+    submitEssay,
+    submitVotesAnonymous
+  };
+
+  return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
+}
